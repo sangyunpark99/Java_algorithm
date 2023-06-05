@@ -62,11 +62,55 @@ class MySet {
     }
 
     // 차집합
+    public MySet removeAll(MySet b){
+
+        MySet result = new MySet();
+
+        for(int itemA : this.list){
+            boolean containFlag = false;
+
+            for(int itemB: b.list){
+                if(itemA == itemB){
+                    containFlag = true;
+                    break;
+                }
+            }
+
+            if(!containFlag){ // 두 리스트에 같은 값이 없다.
+                result.add(itemA);
+            }
+        }
+
+        return result;
+    }
 }
 
 public class Practice {
     public static void main(String[] args) {
         // Test code
         MySet a = new MySet();
+
+        a.add(1);
+        a.add(1);
+        a.add(1);
+        System.out.println(a.list);
+        a.add(2);
+        a.add(3);
+        System.out.println(a.list);
+
+        a = new MySet(new int[]{1,2,3,4,5});
+        MySet b = new MySet(new int[]{2,4,6,8,10});
+        System.out.println("a = " + a.list);
+        System.out.println("b.list = " + b.list);
+
+        MySet result = a.retainAll(b);
+        System.out.println("교집합: " + result.list);
+
+        result = a.addAll(b);
+        System.out.println("합집합: " + result.list);
+
+        result = a.removeAll(b);
+        System.out.println("차집합: " + result.list);
+
     }
 }
