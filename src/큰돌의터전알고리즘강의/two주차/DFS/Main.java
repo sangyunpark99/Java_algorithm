@@ -27,12 +27,22 @@ public class Main {
 
     }
 
-    public static void dfs(int from){
+    public static void dfs(int from){ // 방법 1
         visited[from] = 1;
         System.out.println(from);
 
         for (int i = 0; i < map.get(from).size(); i++) {
-            if(visited[map.get(from).get(i)]== 0){
+            if(visited[map.get(from).get(i)]== 0){ // 방문 검색
+                dfs(map.get(from).get(i));
+            }
+        }
+    }
+
+    public static void dfs2(int from){ // 방법2
+        if(visited[from] == 1) return; // 방문 검색
+        visited[from] = 1;
+        for (int i = 0; i < map.get(from).size(); i++) {
+            if(visited[map.get(from).get(i)]== 0){ // 일단 들어가!
                 dfs(map.get(from).get(i));
             }
         }
