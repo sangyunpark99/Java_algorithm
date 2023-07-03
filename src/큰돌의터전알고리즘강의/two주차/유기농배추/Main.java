@@ -42,7 +42,7 @@ public class Main {
                 Arrays.fill(map[j],0);
             }
 
-            for (int j = 0; j < map.length; j++) {
+            for (int j = 0; j < map.length; j++) { // visited 초기화
                 Arrays.fill(visited[j],0);
             }
 
@@ -56,7 +56,7 @@ public class Main {
 
             for (int j = 0; j < map.length; j++) {
                 for (int l = 0; l < map[j].length; l++) {
-                    if(map[i][l] == 1){
+                    if(map[j][l] == 1 && visited[j][l] == 0){
                         answer++;
                         dfs(j,l);
                     }
@@ -68,12 +68,16 @@ public class Main {
                 Arrays.fill(map[j], 0);
             }
 
+            for (int j = 0; j < map.length; j++) {
+                Arrays.fill(visited[j], 0);
+            }
+
             System.out.println(answer);
         }
     }
 
     public static void dfs(int y, int x){
-        visited[y][x] = 1;
+        visited[y][x] = 1; // 자기자신 방문
 
         for (int i = 0; i < 4; i++) {
             int ny = y + dy[i];
@@ -81,11 +85,9 @@ public class Main {
 
             if(ny < 0 || nx < 0 || ny >= n || nx >= m || map[ny][nx] == 0) continue;
             if(visited[ny][nx] == 0){
-                dfs(y,x);
+                dfs(ny,nx);
             }
         }
-
-        return;
     }
 
 }
