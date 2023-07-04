@@ -36,6 +36,7 @@ public class Main { // 분할 정복
             return res.append(value);
         }
 
+        // 그 사이값
         for (int i = y; i < y+size; i++) {
             for (int j = x; j < x+size; j++) {
                 if(value != map[i][j]){ // 같지 않다면 4분할
