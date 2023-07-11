@@ -44,18 +44,17 @@ public class Main {
 
         while(true){
 
-            for (int i = 0; i < visited.length; i++) { // visited 배열 초기화
-                Arrays.fill(visited[i],0);
-            }
-
-            if(move() == 0){
+            if(move() == 0){ // 열린 국경이 없을때까지
                 break;
             }else{
                 result++;
             }
         }
 
-        System.out.println(result);
+        bw.write(result + "\n");
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
     public static int move(){ // 움직여라!
@@ -68,13 +67,14 @@ public class Main {
                     Queue<Node> queue = new LinkedList();
                     ArrayList<Node> list = new ArrayList<>();
 
-                    Node node = new Node(y,x);
+                    Node node = new Node(x,y);
                     queue.add(node); // 큐에 노드 넣어주기
                     list.add(node); // 값들 넣어주기
 
                     int sum = map[node.y][node.x];
                     visited[node.y][node.x] = 1;
 
+                    // bfs
                     while(queue.size() > 0){
                         Node cur = queue.poll();
 
@@ -83,7 +83,7 @@ public class Main {
                             int ny = cur.y + dy[k];
                             if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
                             if(visited[ny][nx] == 0){
-                                int gap = Math.abs(map[ny][nx] - map[y][x]);
+                                int gap = Math.abs(map[ny][nx] - map[cur.y][cur.x]);
                                 if(gap >= L && gap <= R){
                                     queue.add(new Node(nx,ny)); // queue에 넣고
                                     list.add(new Node(nx,ny));
@@ -97,7 +97,7 @@ public class Main {
 
                     if(count > 0){
 
-                        int average = sum / list.size();
+                        int average = sum / list.size(); // 평균 값 구하기
 
                         for (int k = 0; k < list.size(); k++) {
                             Node cur = list.get(k);
@@ -106,6 +106,10 @@ public class Main {
                     }
                 }
             }
+        }
+
+        for (int i = 0; i < visited.length; i++) { // visited 배열 초기화
+            Arrays.fill(visited[i],0);
         }
 
         return count;
