@@ -79,10 +79,13 @@ public class Main {
         }
 
         if(result == Integer.MAX_VALUE){
-            System.out.println("IMPOSSIBLE");
+            bw.write("IMPOSSIBLE");
         }else{
-            System.out.println(result);
+            bw.write(result);
         }
+
+        bw.flush();
+        bw.close();
     }
 
     public static void humanBfs(int y, int x){
@@ -102,7 +105,7 @@ public class Main {
 
                 if(nx < 0 || nx >= C || ny < 0 || ny >= R) continue;
                 if(visitedHuman[ny][nx] == 0 && (map[ny][nx].equals(".") || map[ny][nx].equals("F"))){
-                    if(visitedHuman[ny][nx] < visitedFire[ny][nx]){
+                    if(visitedHuman[ny][nx] < visitedFire[ny][nx] || visitedFire[ny][nx] == 0){
                         visitedHuman[ny][nx] = visitedHuman[cur.y][cur.x] + 1;
 
                         Node next = new Node(nx,ny);
