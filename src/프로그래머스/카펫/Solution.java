@@ -20,8 +20,8 @@ public class Solution {
             int j = num / i; // j
 
             if(num%j==0 && num%i==0){ // 둘다 나눠떨어지는
-                int row = Math.max(i,j);
-                int col = Math.min(i,j);
+                int row = Math.max(i,j); // 가로 값이 더 커야함
+                int col = Math.min(i,j); // 세로 값이 더 작아야함
 
                 if((row-2) * (col-2) == yellow){ // yellow 갯수와 같은 경우
                     answer[0] = row;
