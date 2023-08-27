@@ -31,7 +31,7 @@ public class Main {
         visited[n] = 1;
         cnt[n] = 1;
 
-        if(n == m){
+        if(n == m){ // 반각
             System.out.println(0);
             System.out.println(1);
             return;
