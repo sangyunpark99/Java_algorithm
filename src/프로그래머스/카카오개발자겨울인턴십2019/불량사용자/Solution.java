@@ -1,4 +1,4 @@
-package 프로그래머스.카카오개발자겨울인턴십.불량사용자;
+package 프로그래머스.카카오개발자겨울인턴십2019.불량사용자;
 
 import java.util.ArrayList;
 import java.util.Arrays;

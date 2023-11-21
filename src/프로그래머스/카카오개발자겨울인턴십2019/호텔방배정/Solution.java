@@ -1,4 +1,4 @@
-package 프로그래머스.카카오개발자겨울인턴십.호텔방배정;
+package 프로그래머스.카카오개발자겨울인턴십2019.호텔방배정;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package 프로그래머스.카카오개발자겨울인턴십.튜플;
+package 프로그래머스.카카오개발자겨울인턴십2019.튜플;
 
 import java.util.Arrays;
 import java.util.HashSet;
