@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
 
     public static ArrayList<ArrayList<Integer>> map = new ArrayList<>();
-    public static int[] v = new int[32];
-    public static int[] dice = new int[10];
+    public static int[] v = new int[104];
+    public static int[] a = new int[14];
+    public static int[] mal = new int[4];
     public static int answer = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws IOException {
@@ -20,10 +23,78 @@ public class Main {
 
         for (int i = 0; i < 10; i++) {
             int value = Integer.parseInt(stk.nextToken());
-            dice[i] = value;
+            a[i] = value;
         }
 
         setMap();
+
+        // 어떤 말을 움직일까? -> 완전탐색
+        int answer = go(0);
+        System.out.println(answer);
+    }
+
+    public static int move(int here, int cnt) {
+        if (here == 100) {
+            return 100;
+        }
+        if (map.get(here).size() >= 2) {
+            here = map.get(here).get(1);
+            cnt--;
+        }
+
+        if (cnt > 0) {
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(here);
+            int there = 0;
+            while (!queue.isEmpty()) {
+                int x = queue.poll();
+                there = map.get(x).get(0);
+                queue.add(there);
+                if (there == 100) {
+                    break;
+                }
+                cnt--;
+                if (cnt == 0) {
+                    break;
+                }
+            }
+            return there;
+        } else {
+            return here;
+        }
+    }
+
+    public static boolean isMal(int mal_idx, int idx) {
+        if (mal_idx == 100) {
+            return false;
+        }
+        for (int i = 0; i < 4; i++) {
+            if (i == idx) {
+                continue;
+            }
+            if (mal[i] == mal_idx) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int go(int here) {
+        if (here == 10) {
+            return 0;
+        }
+        int ret = 0;
+        for (int i = 0; i < 4; i++) {
+            int temp_idx = mal[i];
+            int mal_idx = move(temp_idx, a[here]);
+            if (isMal(mal_idx, i)) {
+                continue;
+            }
+            mal[i] = mal_idx;
+            ret = Math.max(ret, go(here + 1) + v[mal_idx]);
+            mal[i] = temp_idx;
+        }
+        return ret;
     }
 
     // 인접 리스트 - 단방향
@@ -54,7 +125,7 @@ public class Main {
         add(20, 100);
 
         // 값 추가
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i <= 20; i++) {
             v[i] = i * 2;
         }
 
