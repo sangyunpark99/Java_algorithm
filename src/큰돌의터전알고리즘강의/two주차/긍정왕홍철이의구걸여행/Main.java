@@ -23,6 +23,7 @@ public class Main {
         set = new HashSet<>();
         go(0, 0, 0);
         System.out.println(set);
+        System.out.println(set.size());
     }
 
     public static void go(int y, int x, int coin) {
