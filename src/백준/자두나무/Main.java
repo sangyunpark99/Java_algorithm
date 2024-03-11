@@ -6,11 +6,9 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-
     public static int T;
     public static int W;
-    public static int[] drop;
-    public static int[][][] memo;
+    public static int[] zadu;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,32 +16,35 @@ public class Main {
 
         T = Integer.parseInt(st.nextToken());
         W = Integer.parseInt(st.nextToken());
-        drop = new int[T + 1];
 
-        memo = new int[3][T + 1][W + 2];
+        zadu = new int[T + 1];
 
         for (int i = 1; i <= T; i++) {
-            drop[i] = Integer.parseInt(br.readLine());
+            zadu[i] = Integer.parseInt(br.readLine());
         }
 
-        for (int i = 1; i <= T; i++) {
-            for (int j = 1; j <= W + 1; j++) {
-                if (drop[i] == 1) {
-                    memo[1][i][j] = Math.max(memo[1][i - 1][j], memo[2][i - 1][j - 1]) + 1;
-                    memo[2][i][j] = Math.max(memo[2][i - 1][j], memo[1][i - 1][j - 1]);
+        int[][][] dp = new int[3][T + 1][W + 2];
+
+        for (int i = 1; i <= T; i++) { // 시간
+            for (int j = 1; j <= W + 1; j++) { // 이동 횟수
+                if (zadu[i] == 1) {
+                    // 가만히 있다가 먹거나 아니면 이동해서 먹거나 둘 중 큰걸로 먹어~
+                    dp[1][i][j] = Math.max(dp[1][i - 1][j] + 1, dp[2][i - 1][j - 1] + 1);
+                    dp[2][i][j] = Math.max(dp[2][i - 1][j], dp[1][i - 1][j - 1]);
                 } else {
-                    if (i == 1 && j == 1) {
+                    if (i == 1 && j == 1) { // 어차피 못먹어~
                         continue;
                     }
-                    memo[1][i][j] = Math.max(memo[1][i - 1][j], memo[2][i - 1][j - 1]);
-                    memo[2][i][j] = Math.max(memo[2][i - 1][j], memo[1][i - 1][j - 1]) + 1;
+                    dp[1][i][j] = Math.max(dp[1][i - 1][j], dp[2][i - 1][j - 1]);
+                    dp[2][i][j] = Math.max(dp[1][i - 1][j - 1] + 1, dp[2][i - 1][j] + 1);
                 }
             }
         }
 
-        int result = 0;
+        int result = Integer.MIN_VALUE;
+
         for (int i = 1; i <= W + 1; i++) {
-            result = Math.max(result, Math.max(memo[1][T][i], memo[2][T][i]));
+            result = Math.max(result, Math.max(dp[1][T][i], dp[2][T][i]));
         }
 
         System.out.println(result);
