@@ -15,9 +15,8 @@ public class Main {
     public static int[][] map;
     public static int[][] visited;
 
-    // 북,동,남,서
-    public static int[] dx = {0, 1, 0, -1};
     public static int[] dy = {-1, 0, 1, 0};
+    public static int[] dx = {0, 1, 0, -1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,6 +24,7 @@ public class Main {
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
+
         map = new int[N][M];
         visited = new int[N][M];
 
@@ -32,16 +32,16 @@ public class Main {
             map[i] = Arrays.stream(br.readLine().split("")).mapToInt(Integer::parseInt).toArray();
         }
 
-        bfs(0, 0);
-        
+        bfs();
+
         System.out.println(visited[N - 1][M - 1]);
     }
 
-    public static void bfs(int y, int x) {
-        Node node = new Node(x, y);
+    public static void bfs() {
         Queue<Node> queue = new LinkedList<>();
+        Node node = new Node(0, 0); // 시작지점
         queue.add(node);
-        visited[y][x] = 1; // 시작지점
+        visited[node.y][node.x] = 1;
 
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
@@ -53,20 +53,19 @@ public class Main {
                     continue;
                 }
 
-                if (visited[ny][nx] == 0 && map[ny][nx] == 1) {
-                    visited[ny][nx] = visited[cur.y][cur.x] + 1;
-                    queue.add(new Node(nx, ny));
+                if (map[ny][nx] == 1 && visited[ny][nx] == 0) { // 이동할 수 있고, 방문을 하지 않은 경우
+                    visited[ny][nx] = visited[cur.y][cur.x] + 1; // 한개 증가시켜준다.
+                    queue.add(new Node(ny, nx));
                 }
             }
-
         }
     }
 
     public static class Node {
-        int x;
         int y;
+        int x;
 
-        public Node(int x, int y) {
+        public Node(int y, int x) {
             this.x = x;
             this.y = y;
         }
