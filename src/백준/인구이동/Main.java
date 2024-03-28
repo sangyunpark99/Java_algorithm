@@ -72,8 +72,8 @@ public class Main {
                     queue.add(node); // 큐에 노드 넣어주기
                     list.add(node); // 값들 넣어주기
 
-                    int sum = map[node.y][node.x];
-                    visited[node.y][node.x] = 1;
+                    int sum = map[node.y][node.x]; // 합계 초기화
+                    visited[node.y][node.x] = 1; // 방문 처리 해주기
 
                     // bfs
                     while (queue.size() > 0) {
@@ -85,14 +85,14 @@ public class Main {
                             if (nx < 0 || nx >= N || ny < 0 || ny >= N) {
                                 continue;
                             }
-                            if (visited[ny][nx] == 0) {
+                            if (visited[ny][nx] == 0) { // 방문하지 않은 경우
                                 int gap = Math.abs(map[ny][nx] - map[cur.y][cur.x]);
-                                if (gap >= L && gap <= R) {
+                                if (gap >= L && gap <= R) { // gap 차이가 L과 R 사이인 경우
                                     queue.add(new Node(nx, ny)); // queue에 넣고
                                     list.add(new Node(nx, ny));
                                     visited[ny][nx] = 1;
-                                    flag = 1; // 갯수 플플
-                                    sum += map[ny][nx];
+                                    flag = 1; // 이동 했습니다..!
+                                    sum += map[ny][nx]; // 합계 더하기
                                 }
                             }
                         }
@@ -111,7 +111,7 @@ public class Main {
             }
         }
 
-        visited = new int[N][N];
+        visited = new int[N][N]; // 방문 초기화
 
         return flag;
     }
