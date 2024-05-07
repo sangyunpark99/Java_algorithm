@@ -78,6 +78,8 @@ public class Main {
 
     public static int dfs(int y, int x) {
 
+        int size = 1;
+
         for (int i = 0; i < 4; i++) {
             int ny = y + dy[i];
             int nx = x + dx[i];
@@ -86,8 +88,7 @@ public class Main {
             }
             if (map[ny][nx] == 0 && visited[ny][nx] == 0) { // 방문하지 않은 곳인 경우
                 visited[ny][nx] = 1;
-                size++;
-                dfs(ny, nx); // 너비
+                size += dfs(ny, nx); // 너비
             }
         }
         return size;
