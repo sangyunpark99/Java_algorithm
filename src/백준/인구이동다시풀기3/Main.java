@@ -5,8 +5,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -28,6 +30,8 @@ public class Main {
         L = Integer.parseInt(st.nextToken());
         R = Integer.parseInt(st.nextToken());
 
+        int result = 0;
+
         map = new int[N][N];
         visited = new int[N][N];
 
@@ -35,67 +39,73 @@ public class Main {
             map[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         }
 
-        bw.write(go() + "\n");
+        while (true) {
+            if (go() == 0) { // 인구 이동이 없는 경우
+                break;
+            } else {
+                result++;
+            }
+        }
+
+        bw.write(result + "\n");
         br.close();
         bw.close();
     }
 
     public static int go() {
 
-        int answer = 0;
+        int flag = 0;
 
-        while (true) {
-            Queue<Node> queue = new LinkedList<>();
-            queue.add(new Node(0, 0)); // (0,0)을 시작점으로
-            visited = new int[N][N]; // 방문
-            Queue<Node> country = new LinkedList<>();
-            int sum = 0;
-            while (!queue.isEmpty()) { // 다 탐색해야 한다.
-                System.out.println("queue : " + queue);
-                Node cur = queue.poll();
-                for (int i = 0; i < 4; i++) {
-                    int ny = cur.y + dy[i];
-                    int nx = cur.x + dx[i];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (visited[i][j] == 0) {
+                    Queue<Node> queue = new LinkedList<>();
+                    List<Node> list = new ArrayList<>();
 
-                    if (ny < 0 || ny >= N || nx < 0 || nx >= N) {
-                        continue;
-                    }
+                    queue.add(new Node(i, j));
+                    list.add(new Node(i, j));
 
-                    if (visited[ny][nx] == 0) { // 국경이 열릴 경우 추가
-                        int gap = Math.abs(map[ny][nx] - map[cur.y][cur.x]);
-                        if (L <= gap && gap <= R) {
-                            sum += map[ny][nx]; // 합계
-                            country.add(new Node(ny, nx));
+                    int sum = map[i][j];
+                    visited[i][j] = 1; // 방문처리
+
+                    while (!queue.isEmpty()) {
+                        Node cur = queue.poll();
+
+                        for (int k = 0; k < 4; k++) {
+                            int ny = cur.y + dy[k];
+                            int nx = cur.x + dx[k];
+
+                            if (nx < 0 || nx >= N || ny < 0 || ny >= N) {
+                                continue;
+                            }
+                            if (visited[ny][nx] == 0) {
+                                int gap = Math.abs(map[ny][nx] - map[cur.y][cur.x]);
+                                if (L <= gap && gap <= R) {
+                                    queue.add(new Node(ny, nx));
+                                    list.add(new Node(ny, nx));
+                                    visited[ny][nx] = 1;
+                                    flag = 1; // 국경 허물 수 있다.
+                                    sum += map[ny][nx];
+                                }
+                            }
                         }
-                        visited[ny][nx] = 1; // 방문 처리
-                        queue.add(new Node(ny, nx)); // 다음 방문 처리
                     }
+
+                    if (flag > 0) {
+                        int average = sum / list.size();
+                        for (Node node : list) {
+                            map[node.y][node.x] = average;
+                        }
+                    }
+
+
                 }
             }
-
-            if (country.isEmpty()) { // 비어있는 경우
-                break;
-            }
-
-            // 비어있지 않다면
-            int value = sum / country.size();
-            for (Node node : country) { // 국경에 값 부여하기
-                map[node.y][node.x] = value;
-            }
-
-            answer++;
-
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    System.out.print(map[i][j] + " ");
-                }
-                System.out.println();
-            }
-
-            System.out.println();
         }
 
-        return answer;
+        visited = new int[N][N]; // 방문 초기화
+
+        return flag;
     }
 
     public static class Node {

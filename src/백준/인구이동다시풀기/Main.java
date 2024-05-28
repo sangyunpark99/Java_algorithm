@@ -103,8 +103,6 @@ public class Main {
                 }
             }
         }
-
-        visited = new int[N][N];
         return flag;
     }
 
