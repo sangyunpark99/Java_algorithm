@@ -18,7 +18,7 @@ public class Main {
         A = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        
+
         array = new int[A + 1];
         int i = 1;
         while (st.hasMoreTokens()) {
@@ -33,7 +33,7 @@ public class Main {
 
         for (int j = 1; j <= A; j++) {
             for (int k = 1; k < j; k++) {
-                if (array[j] > array[k]) {
+                if (array[j] > array[k]) { // 각 자리 수마다 값을 누적해준다.
                     dp[j] = Math.max(dp[j], dp[k] + 1);
                 }
             }
