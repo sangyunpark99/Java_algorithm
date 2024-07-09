@@ -40,10 +40,8 @@ public class Main {
                         right = mid;
                     }
                 }
-
                 lis.set(left, num); // 부분 증가 수열 갱신
             }
-
         }
 
         bw.write(lis.size() + "\n");
