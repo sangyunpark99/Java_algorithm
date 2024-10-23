@@ -42,7 +42,7 @@ public class Main {
             for (int i = 0; i < candies.size(); i++) {
                 int money = candies.get(i).price;
                 for (int j = money; j <= m; j++) {
-                    dp[j] = Math.max(dp[j], dp[j - money] + candies.get(i).cal);
+                    dp[j] = Math.max(dp[j], dp[j - money] + candies.get(i).cal); // 최댓값 찾기
                 }
             }
 
