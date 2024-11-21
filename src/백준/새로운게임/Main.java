@@ -57,8 +57,8 @@ public class Main {
     }
 
     private static void game() {
-        for (int turn = 1; turn <= 1000; turn++) {
-            for (int horse = 0; horse < k; horse++) {
+        for (int turn = 1; turn <= 1000; turn++) { // 턴 증가
+            for (int horse = 0; horse < k; horse++) { // 말 이동
                 int y = horses[horse][0];
                 int x = horses[horse][1];
                 int dir = horses[horse][2];
