@@ -40,6 +40,7 @@ public class Main {
         }
 
         double ret = 0.0;
+        // 더해주는 이유는 각 경우를 따지기 위해서 -> 서로 독립 사건 이므로 더해주어야 한다.
         // 1. A골, B노골
         ret += goal(scoreA + 1, scoreB, turn + 1) * A * (1 - B);
         // 2. A골, B골
