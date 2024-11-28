@@ -11,7 +11,7 @@ public class Main {
     public static int[] dp; // 최소 몇개의 팰린드롬으로 저장할 수 있는지
 
     public static void main(String[] args) throws IOException {
-        //
+        // dp 어려운 문제는 전처리 과정이 필요하다.
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] value = br.readLine().split("");
 
