@@ -33,7 +33,7 @@ public class Main {
         }
     }
 
-    public static String findMax(int here) {
+    public static String findMax(int here) { // 크게 만들기 위해선 자릿수 UP, 성냥이 제일 적게 들지만 큰수 선택
         String ret = "";
         if ((here & 1) == 1) { // 홀 수인 경우 1을 선택하고 1개를 버리는 것보다 7을 선택하는게 더 낫다
             ret += "7";
