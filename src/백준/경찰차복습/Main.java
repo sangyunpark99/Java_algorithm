@@ -58,7 +58,7 @@ public class Main {
                 getTotalDistance(next, b) + getDistance(a, next));
     }
 
-    private static void trackPath() { // 경로 추적
+    private static void trackPath() { // 경로 추적 방식 -> 사건 하나씩 다시 탐색 비교(dp로)
         // dp에는 이미 전부 최솟값이 반영
         int a = 0;
         int b = 1;
