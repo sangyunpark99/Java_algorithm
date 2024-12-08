@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -33,6 +34,10 @@ public class Main {
             quests[i] = new Quest(STR, INT, POINT);
         }
 
+        for (int i = 0; i < dp.length; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+
         System.out.println(findMaxQuestValue(character.STR, character.INT));
     }
 
@@ -44,6 +49,7 @@ public class Main {
             return ret;
         }
 
+        ret = 0;
         dp[STR][INT] = 0;
         int point = 0;
         List<Integer> list = new ArrayList<>();
@@ -60,9 +66,18 @@ public class Main {
         }
 
         // 추가한 포인트 분배
-        for (int p = 0; p <= point; p++) {
-
+        for (int p = 0; p <= point; p++) { // 얻을 수 있는 포인트는 0 ~ 1000
+            int nextSTR = Math.min(1000, STR + p);
+            int nextINT = Math.min(1000, INT + point - p);
+            ret = Math.max(ret, findMaxQuestValue(nextSTR, nextINT));
+            dp[STR][INT] = ret;
         }
+
+        for (int here : list) { // 원상 복구
+            visited[here] = false;
+        }
+
+        return ret;
     }
 
     static class Quest { // 퀘스트
