@@ -67,7 +67,7 @@ public class Main {
 
         // 추가한 포인트 분배
         for (int p = 0; p <= point; p++) { // 얻을 수 있는 포인트는 0 ~ 1000
-            int nextSTR = Math.min(1000, STR + p);
+            int nextSTR = Math.min(1000, STR + p); // 1000을 넘기면 안된다.
             int nextINT = Math.min(1000, INT + point - p);
             ret = Math.max(ret, findMaxQuestValue(nextSTR, nextINT));
             dp[STR][INT] = ret;
