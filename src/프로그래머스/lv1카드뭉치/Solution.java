@@ -1,4 +1,4 @@
-package 프로그래머스.lv1;
+package 프로그래머스.lv1카드뭉치;
 
 public class Solution {
 
