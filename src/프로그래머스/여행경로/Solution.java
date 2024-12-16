@@ -95,11 +95,6 @@ public class Solution { // 1차 50% 정답, 문제점 : PriorityQueue는 모든 
 
         for (int i = 1; i < answers.size(); i++) {
             String nextValue = String.join("", answers.get(i));
-            String firstValue = answers.get(i).get(0);
-
-            if (!firstValue.equals("ICN")) {
-                continue;
-            }
 
             if (nextValue.compareTo(bfText) < 0) {
                 answerIdx = i;
