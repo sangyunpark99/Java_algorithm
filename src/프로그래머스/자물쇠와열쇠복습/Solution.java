@@ -26,6 +26,7 @@ public class Solution {
         for (int k = 0; k < 4; k++) { // 90도 회전 4번
             for (int y = -N; y < N; y++) { // 열쇠가 움직일 수 있는 최대 범위
                 for (int x = -N; x < N; x++) {
+                    // 열쇠 이등
                     if (solve(key, lock, y, x)) { // 각 열쇠의 좌표를 확인
                         return true;
                     }
@@ -48,8 +49,8 @@ public class Solution {
     private static boolean solve(int[][] key, int[][] lock, int y, int x) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) { // key블록의 하나하나 확인
-                int ny = i - y;
-                int nx = j - x;
+                int ny = i + y;
+                int nx = j + x;
                 if (ny < 0 || nx < 0 || ny >= M || nx >= M) { // 범위를 넘어가면
                     continue;
                 }
